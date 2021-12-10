@@ -108,11 +108,12 @@ If you would like to use the App Protect module, create the following additional
 
 If you would like to use the App Protect Dos module, create the following additional resources:
 
-1. Create a custom resource definition for `APDosPolicy` and `APDosLogConf`:
+1. Create a custom resource definition for `APDosPolicy`, `APDosLogConf` and `DosProtectedResource`:
 
    ```
    $ kubectl apply -f common/crds/appprotectdos.f5.com_apdoslogconfs.yaml
    $ kubectl apply -f common/crds/appprotectdos.f5.com_apdospolicies.yaml
+   $ kubectl apply -f common/crds/appprotectdos.f5.com_dosprotectedresources.yaml
    ```
 
 ## 3. Deploy the Ingress Controller

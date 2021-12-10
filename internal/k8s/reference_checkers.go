@@ -294,7 +294,12 @@ func (rc *dosResourceReferenceChecker) IsReferencedByVirtualServer(namespace str
 	return false
 }
 
-func (rc *dosResourceReferenceChecker) IsReferencedByVirtualServerRoute(_ string, _ string, _ *v1.VirtualServerRoute) bool {
+func (rc *dosResourceReferenceChecker) IsReferencedByVirtualServerRoute(namespace string, name string, vsr *v1.VirtualServerRoute) bool {
+	for _, route := range vsr.Spec.Subroutes {
+		if route.Dos == namespace+"/"+name || (namespace == vsr.Namespace && route.Dos == name) {
+			return true
+		}
+	}
 	return false
 }
 

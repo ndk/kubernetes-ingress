@@ -1562,7 +1562,7 @@ func TestValidateNginxIngressAnnotations(t *testing.T) {
 			appProtectDosEnabled:  true,
 			internalRoutesEnabled: false,
 			expectedErrors:        nil,
-			msg:                   "valid appprotectdos.f5.com/app-protect-dos-enable annotation",
+			msg:                   "valid appprotectdos.f5.com/app-protect-dos-enable annotation with default namespace",
 		},
 		{
 			annotations: map[string]string{
@@ -1574,7 +1574,7 @@ func TestValidateNginxIngressAnnotations(t *testing.T) {
 			appProtectDosEnabled:  true,
 			internalRoutesEnabled: false,
 			expectedErrors:        nil,
-			msg:                   "valid appprotectdos.f5.com/app-protect-dos-enable annotation",
+			msg:                   "valid appprotectdos.f5.com/app-protect-dos-enable annotation with fully specified identifier",
 		},
 		{
 			annotations: map[string]string{
@@ -1588,7 +1588,7 @@ func TestValidateNginxIngressAnnotations(t *testing.T) {
 			expectedErrors: []string{
 				"annotations.appprotectdos.f5.com/app-protect-dos-resource: Invalid value: \"special-chars-&%^\": must be a qualified name",
 			},
-			msg: "valid appprotectdos.f5.com/app-protect-dos-enable annotation",
+			msg: "invalid appprotectdos.f5.com/app-protect-dos-enable annotation with special characters",
 		},
 		{
 			annotations: map[string]string{
@@ -1602,7 +1602,7 @@ func TestValidateNginxIngressAnnotations(t *testing.T) {
 			expectedErrors: []string{
 				"annotations.appprotectdos.f5.com/app-protect-dos-resource: Invalid value: \"too/many/qualifiers\": must be a qualified name",
 			},
-			msg: "valid appprotectdos.f5.com/app-protect-dos-enable annotation",
+			msg: "invalid appprotectdos.f5.com/app-protect-dos-enable annotation with incorrectly qualified identifier",
 		},
 		{
 			annotations: map[string]string{

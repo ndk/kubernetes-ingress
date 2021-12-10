@@ -43,7 +43,7 @@ spec:
 {{% table %}}
 |Field | Description | Type | Required |
 | ---| ---| ---| --- |
-|``enable`` | Enables NGINX App Protect Dos. | ``bool`` | Yes |
+|``enable`` | Enables NGINX App Protect Dos. | ``bool`` | No |
 |``name`` | Name of the protected object, max of 63 characters. | ``string`` | No |
 |``apDosMonitor.uri`` | The destination to the desired protected object. [App Protect Dos monitor](#dosprotectedresourceapdosmonitor) Default value: None, URL will be extracted from the first request which arrives and taken from "Host" header or from destination ip+port. | ``string`` | No |
 |``apDosMonitor.protocol`` | Determines if the server listens on http1 / http2 / grpc. [App Protect Dos monitor](#dosprotectedresourceapdosmonitor) Default value: http1. | ``enum`` | No |

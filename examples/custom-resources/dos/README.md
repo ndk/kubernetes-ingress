@@ -43,7 +43,7 @@ $ kubectl apply -f webapp.yaml
     ```
     $ kubectl apply -f virtual-server.yaml
     ```
-Note the reference to the DOS protected resource in the Policy resource. By specifying the resource it enables DOS protection for the VirtualServer.
+Note the reference to the DOS protected resource in the VirtualServer resource. By specifying the resource it enables DOS protection for the VirtualServer.
 
 ## Step 4 - Test the Application
 

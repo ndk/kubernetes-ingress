@@ -10,7 +10,7 @@ toc: true
 
 This document provides an overview of the steps required to use NGINX App Protect Dos with your NGINX Ingress Controller deployment. You can visit the linked documents to find additional information and instructions.
 
-## Install the app-protect-dos-arb
+## Install the App Protect Dos Arbitrator
 
 - Deploy the app protect dos arbitrator
     ```bash
@@ -44,4 +44,4 @@ Take the steps below to set up and deploy the NGINX Ingress Controller and App P
 3. Enable the App Protect Dos module by adding the `enable-app-protect-dos` [cli argument](/nginx-ingress-controller/configuration/global-configuration/command-line-arguments/#cmdoption-enable-app-protect-dos) to your Deployment or DaemonSet file.
 5. [Deploy the Ingress Controller](/nginx-ingress-controller/installation/installation-with-manifests/#deploy-the-ingress-controller).
 
-For more information, see the [Configuration guide](/nginx-ingress-controller/app-protect-dos/configuration) and the [NGINX Ingress Controller with App Protect Dos examples on GitHub](https://github.com/nginxinc/kubernetes-ingress/tree/v1.12.0/examples/appprotect-dos).
+For more information, see the [Configuration guide](/nginx-ingress-controller/app-protect-dos/configuration) and the [NGINX Ingress Controller with App Protect Dos examples on GitHub](https://github.com/nginxinc/kubernetes-ingress/tree/v2.0.3/examples/appprotect-dos).
