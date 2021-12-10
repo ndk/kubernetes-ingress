@@ -7,11 +7,6 @@ doctypes: [""]
 toc: true
 ---
 
-
-The DosProtectedResource allows you to specify App Protect Dos configuration as a Kubernetes resource that can then be referenced by your [Ingress](/nginx-ingress-controller/configuration/ingress-resources/basic-configuration) and [VirtualServer and VirtualServerRoute](/nginx-ingress-controller/configuration/virtualserver-and-virtualserverroute-resources/) resources.
-
-The resource is implemented as a [Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
-
 > **Feature Status**: DOS is available as a preview feature: it is suitable for experimenting and testing; however, it must be used with caution in production environments. Additionally, while the feature is in preview status, we might introduce some backward-incompatible changes to the resource specification in the next releases. The feature is disabled by default. To enable it, set the [enable-preview-policies](/nginx-ingress-controller/configuration/global-configuration/command-line-arguments/#cmdoption-enable-preview-policies) command-line argument of the Ingress Controller.
 
 > Note: This feature is only available in NGINX Plus with AppProtectDos.
@@ -21,7 +16,7 @@ The resource is implemented as a [Custom Resource](https://kubernetes.io/docs/co
 
 ## Dos Protected Resource Specification
 
-Below is an example of a dos protected resource. It defines it's own configuration and references to policy configuration and to log configuration:
+Below is an example of a dos protected resource.
 ```yaml
 apiVersion: appprotectdos.f5.com/v1beta1
 kind: DosProtectedResource
@@ -32,11 +27,6 @@ spec:
   name: "my-dos"
   apDosMonitor: 
     uri: "webapp.example.com"
-  apDosPolicy: "dospolicy"
-  dosSecurityLog:
-    enable: true
-    apDosLogConf: "doslogconf"
-    dosLogDest: "syslog-svc.default.svc.cluster.local:514"
 
 ```
 
@@ -56,65 +46,11 @@ spec:
 
 ### DosProtectedResource.apDosPolicy
 
-The `apDosPolicy` is a reference to the policy configuration defined as an `ApDosPolicy`.
+The `apDosPolicy` is a reference (qualified identifier in the format `namespace/name`) to the policy configuration defined as an `ApDosPolicy`.
 
 ### DosProtectedResource.apDosMonitor
 
 This is how NGINX App Protect DoS monitors the stress level of the protected object. The monitor requests are sent from localhost (127.0.0.1).
-
-### Applying Policies
-
-You can apply policies to both VirtualServer and VirtualServerRoute resources. For example:
-  * VirtualServer:
-    ```yaml
-    apiVersion: k8s.nginx.org/v1
-    kind: VirtualServer
-    metadata:
-      name: cafe
-      namespace: cafe
-    spec:
-      host: cafe.example.com
-      dos: "default/dos-protected" # virtual server dos configuration
-      upstreams:
-      - name: coffee
-        service: coffee-svc
-        port: 80
-      routes:
-      - path: /tea
-        dos: "other/other-dos-protected" # route dos configuration
-        route: tea/tea
-      - path: /coffee
-        action:
-          pass: coffee
-      ```
-
-      For VirtualServer, you can apply a policy:
-      - to all routes (spec dos)
-      - to a specific route (route dos)
-
-      Route dos configuration override spec dos configuration.
-  
-  * VirtualServerRoute, which is referenced by the VirtualServer above:
-    ```yaml
-    apiVersion: k8s.nginx.org/v1
-    kind: VirtualServerRoute
-    metadata:
-      name: tea
-      namespace: tea
-    spec:
-      host: cafe.example.com
-      upstreams:
-      - name: tea
-        service: tea-svc
-        port: 80
-      subroutes:
-      - path: /tea
-        dos: "default/dos-protected"
-        action:
-          pass: tea
-    ```
-
-    For VirtualServerRoute, you can apply dos configuration to a subroute (subroute policies).
 
 ### Invalid Dos Protected Resources
 

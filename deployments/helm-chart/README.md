@@ -61,10 +61,6 @@ For NGINX Plus: (assuming you have pushed the Ingress controller image `nginx-pl
 ```console
 $ helm install my-release nginx-stable/nginx-ingress --set controller.image.repository=myregistry.example.com/nginx-plus-ingress --set controller.nginxplus=true
 ```
-For App Protect Dos: (assuming you have pushed the Ingress controller image `nginx-plus-ingress` to your private registry `myregistry.example.com`
-```console
-$ helm install --create-namespace -n nginx-ingress my-release nginx-stable/nginx-ingress --set controller.image.repository=myregistry.example.com/nginx-plus-ingress --set controller.nginxplus=true --set controller.appprotectdos.enable=true
-```
 
 **Note**: If you wish to use the experimental repository, replace `stable` with `edge` and add the `--devel` flag.
 
@@ -80,14 +76,6 @@ $ helm install my-release .
 For NGINX Plus:
 ```console
 $ helm install my-release -f values-plus.yaml .
-```
-
-For App Protect Dos: 
-
-replace the value in the `appprotectdos.enable` field inside the values.yaml file with `true`
-
-```console
-$ helm install --create-namespace -n nginx-ingress my-release -f values-plus.yaml .
 ```
 
 **Note**: If you wish to use the experimental repository, replace the value in the `tag` field inside the yaml files with `edge`.
@@ -119,20 +107,10 @@ To upgrade the release `my-release`:
 $ helm upgrade my-release .
 ```
 
-For App Protect Dos:
-```console
-$ helm upgrade -n nginx-ingress my-release .
-```
-
 #### Upgrade via Helm Repository:
 
 ```console
 $ helm upgrade my-release nginx-stable/nginx-ingress
-```
-
-For App Protect Dos:
-```console
-$ helm upgrade -n nginx-ingress my-release nginx-stable/nginx-ingress
 ```
 
 ## Uninstalling the Chart
@@ -144,13 +122,6 @@ To uninstall/delete the release `my-release`:
 ```console
 $ helm uninstall my-release
 ```
-
-For App Protect Dos:
-```console
-$ helm uninstall -n nginx-ingress my-release
-$ kubectl delete ns nginx-ingress
-```
-
 The command removes all the Kubernetes components associated with the release and deletes the release.
 
 ### Uninstalling the CRDs
