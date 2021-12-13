@@ -743,7 +743,7 @@ func (vsv *VirtualServerValidator) validateErrorPageHeader(h v1.Header, fieldPat
 		allErrs = append(allErrs, field.Invalid(fieldPath.Child("name"), h.Name, msg))
 	}
 
-	if err := validateEscapedString(h.Value, "value", `\"${status}\"`); err != nil {
+	if err := ValidateEscapedString(h.Value, "value", `\"${status}\"`); err != nil {
 		allErrs = append(allErrs, field.Invalid(fieldPath.Child("value"), h.Value, err.Error()))
 	}
 
@@ -883,7 +883,7 @@ func (vsv *VirtualServerValidator) validateRedirectURL(redirectURL string, field
 		return append(allErrs, field.Invalid(fieldPath, redirectURL, "must contain the protocol with '://', for example http://, https:// or ${scheme}://"))
 	}
 
-	if err := validateEscapedString(redirectURL, "http://www.nginx.com", "${scheme}://${host}/green/", `\"http://www.nginx.com\"`); err != nil {
+	if err := ValidateEscapedString(redirectURL, "http://www.nginx.com", "${scheme}://${host}/green/", `\"http://www.nginx.com\"`); err != nil {
 		return append(allErrs, field.Invalid(fieldPath, redirectURL, err.Error()))
 	}
 
@@ -926,7 +926,7 @@ func (vsv *VirtualServerValidator) validateActionReturn(r *v1.ActionReturn, fiel
 func validateEscapedStringWithVariables(body string, fieldPath *field.Path, specialValidVars []string, validVars map[string]bool, isPlus bool) field.ErrorList {
 	allErrs := field.ErrorList{}
 
-	if err := validateEscapedString(body, `Hello World! \n`, `\"${request_uri}\" is unavailable. \n`); err != nil {
+	if err := ValidateEscapedString(body, `Hello World! \n`, `\"${request_uri}\" is unavailable. \n`); err != nil {
 		allErrs = append(allErrs, field.Invalid(fieldPath, body, err.Error()))
 	}
 
@@ -1028,7 +1028,7 @@ func validateActionProxyRewritePathForRegexp(rewritePath string, fieldPath *fiel
 
 	allErrs = append(allErrs, validateStringNoVariables(rewritePath, fieldPath)...)
 
-	if err := validateEscapedString(rewritePath, "/rewrite$1", "/images"); err != nil {
+	if err := ValidateEscapedString(rewritePath, "/rewrite$1", "/images"); err != nil {
 		allErrs = append(allErrs, field.Invalid(fieldPath, rewritePath, err.Error()))
 	}
 
@@ -1232,7 +1232,7 @@ func validateRegexPath(path string, fieldPath *field.Path) field.ErrorList {
 		return append(allErrs, field.Invalid(fieldPath, path, fmt.Sprintf("must be a valid regular expression: %v", err)))
 	}
 
-	if err := validateEscapedString(path, "*.jpg", "^/images/image_*.png$"); err != nil {
+	if err := ValidateEscapedString(path, "*.jpg", "^/images/image_*.png$"); err != nil {
 		return append(allErrs, field.Invalid(fieldPath, path, err.Error()))
 	}
 
@@ -1414,7 +1414,7 @@ func validateVariableName(name string, fieldPath *field.Path) field.ErrorList {
 }
 
 func isValidMatchValue(value string) []string {
-	if err := validateEscapedString(value, "value-123"); err != nil {
+	if err := ValidateEscapedString(value, "value-123"); err != nil {
 		return []string{err.Error()}
 	}
 	return nil

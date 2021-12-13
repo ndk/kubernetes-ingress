@@ -2,6 +2,7 @@ package validation
 
 import (
 	"fmt"
+	validation2 "github.com/nginxinc/kubernetes-ingress/pkg/apis/configuration/validation"
 	"net/url"
 	"regexp"
 	"strconv"
@@ -92,7 +93,7 @@ func validateResourceReference(ref string) error {
 // ValidateAppProtectDosLogConf validates LogConfiguration resource
 func ValidateAppProtectDosLogConf(logConf *unstructured.Unstructured) error {
 	lcName := logConf.GetName()
-	err := ValidateRequiredFields(logConf, appProtectDosLogConfRequiredFields)
+	err := validation2.ValidateRequiredFields(logConf, appProtectDosLogConfRequiredFields)
 	if err != nil {
 		return fmt.Errorf("error validating App Protect Dos Log Configuration %v: %w", lcName, err)
 	}
@@ -135,7 +136,7 @@ func validateAppProtectDosName(name string) error {
 		return fmt.Errorf("app Protect Dos Name max length is %v", maxNameLength)
 	}
 
-	return validateEscapedString(name, "protected-object-one")
+	return validation2.ValidateEscapedString(name, "protected-object-one")
 }
 
 var validMonitorProtocol = map[string]bool{
@@ -150,14 +151,14 @@ func validateAppProtectDosMonitor(apDosMonitor v1beta1.ApDosMonitor) error {
 		return fmt.Errorf("app Protect Dos Monitor must have valid URL")
 	}
 
-	if err := validateEscapedString(apDosMonitor.URI, "http://www.example.com"); err != nil {
+	if err := validation2.ValidateEscapedString(apDosMonitor.URI, "http://www.example.com"); err != nil {
 		return err
 	}
 
 	if apDosMonitor.Protocol != "" {
 		allErrs := field.ErrorList{}
 		fieldPath := field.NewPath("dosMonitorProtocol")
-		allErrs = append(allErrs, validateParameter(apDosMonitor.Protocol, validMonitorProtocol, fieldPath)...)
+		allErrs = append(allErrs, validation2.ValidateParameter(apDosMonitor.Protocol, validMonitorProtocol, fieldPath)...)
 		err := allErrs.ToAggregate()
 		if err != nil {
 			return fmt.Errorf("app Protect Dos Monitor Protocol must be: %v", err)
@@ -171,7 +172,7 @@ func validateAppProtectDosMonitor(apDosMonitor v1beta1.ApDosMonitor) error {
 func ValidateAppProtectDosPolicy(policy *unstructured.Unstructured) error {
 	polName := policy.GetName()
 
-	err := ValidateRequiredFields(policy, appProtectDosPolicyRequiredFields)
+	err := validation2.ValidateRequiredFields(policy, appProtectDosPolicyRequiredFields)
 	if err != nil {
 		return fmt.Errorf("error validating DosPolicy %v: %w", polName, err)
 	}

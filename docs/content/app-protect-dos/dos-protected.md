@@ -7,8 +7,6 @@ doctypes: [""]
 toc: true
 ---
 
-> **Feature Status**: DOS is available as a preview feature: it is suitable for experimenting and testing; however, it must be used with caution in production environments. Additionally, while the feature is in preview status, we might introduce some backward-incompatible changes to the resource specification in the next releases. The feature is disabled by default. To enable it, set the [enable-preview-policies](/nginx-ingress-controller/configuration/global-configuration/command-line-arguments/#cmdoption-enable-preview-policies) command-line argument of the Ingress Controller.
-
 > Note: This feature is only available in NGINX Plus with AppProtectDos.
 
 > Note: The feature is implemented using the NGINX Plus [NGINX App Protect Dos Module](https://docs.nginx.com/nginx-app-protect-dos/configuration/).

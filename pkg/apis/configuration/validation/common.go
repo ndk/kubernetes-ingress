@@ -17,7 +17,8 @@ const (
 
 var escapedStringsFmtRegexp = regexp.MustCompile("^" + escapedStringsFmt + "$")
 
-func validateEscapedString(body string, examples ...string) error {
+// ValidateEscapedString validates an escaped string.
+func ValidateEscapedString(body string, examples ...string) error {
 	if !escapedStringsFmtRegexp.MatchString(body) {
 		msg := validation.RegexError(escapedStringsErrMsg, escapedStringsFmt, examples...)
 		return fmt.Errorf(msg)
@@ -217,8 +218,8 @@ func mapToPrettyString(m map[string]bool) string {
 	return strings.Join(out, ", ")
 }
 
-// validateParameter validates a parameter against a map of valid parameters for the directive
-func validateParameter(nPar string, validParams map[string]bool, fieldPath *field.Path) field.ErrorList {
+// ValidateParameter validates a parameter against a map of valid parameters for the directive
+func ValidateParameter(nPar string, validParams map[string]bool, fieldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 
 	if !validParams[nPar] {

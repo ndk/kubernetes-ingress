@@ -2,11 +2,11 @@ package appprotectdos
 
 import (
 	"fmt"
+	"github.com/nginxinc/kubernetes-ingress/pkg/apis/dos/validation"
 	"strings"
 
 	"github.com/nginxinc/kubernetes-ingress/internal/configs"
 	"github.com/nginxinc/kubernetes-ingress/internal/k8s/appprotectcommon"
-	"github.com/nginxinc/kubernetes-ingress/pkg/apis/configuration/validation"
 	"github.com/nginxinc/kubernetes-ingress/pkg/apis/dos/v1beta1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"

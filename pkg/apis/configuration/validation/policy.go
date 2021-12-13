@@ -386,7 +386,7 @@ var validateVerifyClientKeyParameters = map[string]bool{
 func validateIngressMTLSVerifyClient(verifyClient string, fieldPath *field.Path) field.ErrorList {
 	allErrs := field.ErrorList{}
 	if verifyClient != "" {
-		allErrs = append(allErrs, validateParameter(verifyClient, validateVerifyClientKeyParameters, fieldPath)...)
+		allErrs = append(allErrs, ValidateParameter(verifyClient, validateVerifyClientKeyParameters, fieldPath)...)
 	}
 	return allErrs
 }
@@ -451,7 +451,7 @@ func validateRateLimitKey(key string, fieldPath *field.Path, isPlus bool) field.
 		return append(allErrs, field.Required(fieldPath, ""))
 	}
 
-	if err := validateEscapedString(key, `Hello World! \n`, `\"${request_uri}\" is unavailable. \n`); err != nil {
+	if err := ValidateEscapedString(key, `Hello World! \n`, `\"${request_uri}\" is unavailable. \n`); err != nil {
 		allErrs = append(allErrs, field.Invalid(fieldPath, key, err.Error()))
 	}
 
