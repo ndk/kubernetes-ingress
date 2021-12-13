@@ -2,6 +2,7 @@
 .idea
 out
 gen
+cookiefile
 
 # Junit-style report for Jenkins integration
 *.xml
