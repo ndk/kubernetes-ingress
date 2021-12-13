@@ -14,29 +14,14 @@ For general troubleshooting of the Ingress Controller, check the general [troubl
 
 ## Potential Problems
 
-The table below categorizes some potential problems with the Ingress Controller when App Protect module is enabled. It suggests how to troubleshoot those problems, using one or more methods from the next section.
+The table below categorizes some potential problems with the Ingress Controller when App Protect Dos module is enabled. It suggests how to troubleshoot those problems, using one or more methods from the next section.
 
-```eval_rst
-.. list-table::
-   :header-rows: 1
-
-   * - Problem area
-     - Symptom
-     - Troubleshooting method
-     - Common cause
-   * - Start.
-     - The Ingress Controller fails to start.
-     - Check the logs.
-     - Misconfigured APDosLogConf or APDosPolicy.
-   * - APDosLogConf, APDosPolicy or Ingress Resource.
-     - The configuration is not applied.
-     - Check the events of the APDosLogConf, APDosPolicy and Ingress Resource, check the logs, replace the policy.
-     - APDosLogConf or APDosPolicy is invalid.
-   * - NGINX.
-     - The Ingress Controller NGINX verification timeouts while starting for the first time or while reloading after a change.
-     - Check the logs for ``Unable to fetch version: X`` message. Check the Availability of APDosPolicy External References.
-     - Too many Ingress Resources with App Protect Dos enabled. Check the `NGINX fails to start/reload section <#nginx-fails-to-start-or-reload>`_ of the Known Issues.
-```
+{{% table %}}
+|Problem area | Symptom | Troubleshooting method | Common cause |
+| ---| ---| ---| --- |
+|Start | The Ingress Controller fails to start. | Check the Ingress Controller logs. | Misconfigured DosProtectedResource, APDosLogConf or APDosPolicy. |
+|DosProtectedResource, APDosLogConf, APDosPolicy or Ingress Resource. | The configuration is not applied. | Check the events of the DosProtectedResource, APDosLogConf, APDosPolicy and Ingress Resource, check the Ingress Controller logs. | DosProtectedResource, APDosLogConf or APDosPolicy is invalid. |
+{{% /table %}}
 
 ## Troubleshooting Methods
 
@@ -52,6 +37,34 @@ For App Protect Dos specific logs, look for messages starting with `APP_PROTECT_
 ### Check events of an Ingress Resource
 
 Follow the steps of [Checking the Events of an Ingress Resource](/troubleshooting/#checking-the-events-of-an-ingress-resource).
+
+### Check events of a VirtualServer Resource
+
+Follow the steps of [Checking the Events of a VirtualServer Resource](/troubleshooting/#checking-the-events-of-a-virtualeerver-and-virtualserverroute-resources).
+
+### Check events of DosProtectedResource
+
+After you create or update an DosProtectedResource, you can immediately check if the NGINX configuration was successfully applied by NGINX:
+```
+$ kubectl describe dosprotectedresource dos-protected
+Name:         dos-protected
+Namespace:    default
+. . . 
+Events:
+  Type     Reason          Age   From                      Message
+  ----     ------          ----  ----                      -------
+  Normal   AddedOrUpdated  2s    nginx-ingress-controller  Configuration for default/dos-protected was added or updated
+```
+Note that in the events section, we have a `Normal` event with the `AddedOrUpdated` reason, which informs us that the configuration was successfully applied.
+
+If the DosProtectedResource refers to a missing resource, you should see a message like the following:
+```
+Events:
+  Type     Reason    Age   From                      Message
+  ----     ------    ----  ----                      -------
+  Warning  Rejected  8s    nginx-ingress-controller  dos protected refers (default/dospolicy) to an invalid DosPolicy: DosPolicy default/dospolicy not found
+```
+This can be fixed by adding the missing resource.
 
 ### Check events of APDosLogConf
 
