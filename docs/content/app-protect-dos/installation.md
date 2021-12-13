@@ -23,6 +23,8 @@ This document provides an overview of the steps required to use NGINX App Protec
     $ git checkout v2.0.3
     ```
 
+## todo create ns first
+
 ## Install the App Protect Dos Arbitrator
 
 - Deploy the app protect dos arbitrator
